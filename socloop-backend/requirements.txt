@@ -6,9 +6,10 @@ python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 bcrypt==4.0.1
 ultralytics==8.2.18
-pillow==10.4.0
+Pillow==10.4.0
 python-dotenv==1.0.1
 aiofiles==23.2.1
 transformers==4.41.0
-torch
-torchvision
+torch==2.3.0+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+torchvision==0.18.0+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+tokenizers==0.19.1
