@@ -1,13 +1,20 @@
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const isHome = location.pathname === "/";
+
+  const handleLogout = (onNavigate) => {
+    logout();
+    if (onNavigate) onNavigate();
+    navigate("/");
+  };
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -17,7 +24,7 @@ export default function Navbar() {
   ];
 
   const authActions = (onNavigate) => {
-    if (isHome) {
+    if (isHome && !user) {
       return (
         <>
           <Link
@@ -39,13 +46,22 @@ export default function Navbar() {
     }
     if (user) {
       return (
-        <Link
-          to="/dashboard"
-          onClick={onNavigate}
-          className="text-white font-medium hover:text-[#FE4540] transition"
-        >
-          {user.name}
-        </Link>
+        <>
+          <Link
+            to="/dashboard"
+            onClick={onNavigate}
+            className="text-white font-medium hover:text-[#FE4540] transition"
+          >
+            {user.name}
+          </Link>
+          <button
+            onClick={() => handleLogout(onNavigate)}
+            className="flex items-center gap-2 text-gray-300 hover:text-[#FE4540] transition text-sm font-medium cursor-pointer"
+          >
+            <LogOut size={16} />
+            Logout
+          </button>
+        </>
       );
     }
     return null;

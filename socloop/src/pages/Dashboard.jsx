@@ -17,12 +17,13 @@ import {
   Clock,
   Loader,
   LogIn,
+  LogOut,
 } from "lucide-react";
 
 const BASE_URL = "http://127.0.0.1:8000";
 
 export default function Dashboard() {
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, logout } = useAuth();
   const navigate = useNavigate();
 
   const [stats, setStats] = useState(null);
@@ -182,9 +183,18 @@ export default function Dashboard() {
               Impact Dashboard
             </p>
 
-            <h1 className="text-4xl sm:text-5xl font-bold">
-              Hi, {user.name} 👋
-            </h1>
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <h1 className="text-4xl sm:text-5xl font-bold">
+                Hi, {user.name} 👋
+              </h1>
+              <button
+                onClick={() => { logout(); navigate("/"); }}
+                className="flex items-center gap-2 bg-[#510A32] border border-white/10 hover:border-[#FE4540]/60 hover:bg-[#FE4540]/10 text-gray-300 hover:text-[#FE4540] transition px-5 py-2.5 rounded-2xl text-sm font-semibold cursor-pointer"
+              >
+                <LogOut size={18} />
+                Logout
+              </button>
+            </div>
 
             <p className="mt-5 text-gray-400 max-w-2xl">
               Track your donations, incoming requests, and community impact all
